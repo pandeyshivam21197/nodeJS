@@ -31,7 +31,7 @@ router.post("/product",function(req,res){
     res.status(201).json(product);
 
 })
-router.post("/products/:productId",function(req,res){
+router.post("/product/:productId",function(req,res){
     const productId=parseInt(req.params.productId);
     if((!isNaN(productId)))
     {
