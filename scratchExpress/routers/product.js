@@ -6,6 +6,31 @@ router.get("/product",function(req,res){
         res.json(data.products);
     })
 
+router.post("/product",function(req,res){
+    //no need of creatinf body object as it was in case of node js
+    const product=req.body;
+    if(!req.body) //false,undefined,null
+    {
+        res.json({message:"product not present"});
+        return;
+    }
+    if(!product.name||!product.price||!product.code)
+    {
+        res.json({message:"nam,price,code not present"});
+        return;
+    }
+    if(!product.releaseDate)
+
+    {
+        product.releaseDate=(new Date()).toString();
+    }
+    product.id=data.products.length+1;//temprary concept without database
+    //push 
+    data.products.push(product);
+    res.status(201).json(product);
+
+})
+
 router.get("/product/:productId",function(req,res){
     //since its not a query string its in path ,therefore we use req.params.productId
 
@@ -18,8 +43,16 @@ router.get("/product/:productId",function(req,res){
     else{
         const product=data.products.find(function(prod){
             return prod.id===productId;
-        })
+        });
+        if(product==undefined){
+            res.status(404).json({message:"product not found with id:"+productId});
+
+        }
+        else{
+            res.json(product);
+        }
+
     }
-    res.json(product);
+    
 })
 module.exports=router;

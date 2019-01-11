@@ -4,15 +4,20 @@ const indexRouter=require("./routers/index");
 const contactRouter=require("./routers/contact");
 const aboutRouter=require("./routers/about");
 
-const readRouter=require("./routers/product");
+const readProductRouter=require("./routers/product");
+const readReviewRouter=require("./routers/review");
 
 
 const app=express();
+//middleware functions (2+5)
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 
 app.use(indexRouter);
 app.use(contactRouter);
 app.use(aboutRouter);
-app.use(readRouter);
+app.use(readProductRouter);
+app.use(readReviewRouter);
 //the below statement we have describe inside index.js inside router folder---
 
 // app.get('/',function(req,res){
