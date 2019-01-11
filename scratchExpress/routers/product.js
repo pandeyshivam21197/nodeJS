@@ -1,3 +1,4 @@
+"use strict";
 const express=require("express");
 const router=express.Router();
 const data=require("/home/nineleaps/Desktop/node js exmpls/npmodules/scratchExpress/data/seed.json");
@@ -29,6 +30,30 @@ router.post("/product",function(req,res){
     data.products.push(product);
     res.status(201).json(product);
 
+})
+router.post("/products/:productId",function(req,res){
+    const productId=parseInt(req.params.productId);
+    if((!isNaN(productId)))
+    {
+        const product=req.body;
+        if(!product)
+        {
+            res.json({message:"No product details"});
+            return;
+        }
+        let matchingIndex;
+        const matchingProduct=data.products.find(function(product,index)
+        {
+            if(product.id===productId)
+            {
+                matchingIndex=index;
+            }
+        });
+        data.products[matchingIndex]={...matchingProduct,...product};
+
+        res.json(data.products);
+
+    }
 })
 
 router.get("/product/:productId",function(req,res){
